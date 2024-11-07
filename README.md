@@ -1,3 +1,31 @@
+# Teddy Api
+
+Teddy api
+
+## About 🔎
+
+API for handle Teddy customers (register/get/update/delete)
+
+### Implemented features :heavy_check_mark:
+
+- [x] List all customers
+- [x] Register customer
+- [x] Update customer
+- [x] Delete customer
+- [x] Unit tests
+- [x] Swagger documentation
+- [x] DTO validators
+- [x] Validation pipe / whitelist
+- [x] Config module
+
+### Future improvements 🔮
+
+- [ ] E2e tests
+- [ ] Typeorm / db implementation
+- [ ] Queue system
+
+## Tech tools :wrench:
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -22,10 +50,6 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
 ## Installation
 
 ```bash
@@ -34,41 +58,57 @@ $ npm install
 
 ## Running the app
 
+### configuration - add .env content
+
 ```bash
-# development
+$ echo "NODE_ENV=development" > .env
+```
+
+### development
+
+```bash
 $ npm run start
+```
 
-# watch mode
+### watch mode
+
+```bash
 $ npm run start:dev
+```
 
-# production mode
+### production mode
+
+```bash
+$ echo "NODE_ENV=production" > .env
+```
+
+```bash
 $ npm run start:prod
 ```
 
 ## Test
 
+### unit tests
+
 ```bash
-# unit tests
 $ npm run test
+```
 
-# e2e tests
+### e2e tests
+
+```bash
 $ npm run test:e2e
+```
 
-# test coverage
+### test coverage
+
+```bash
 $ npm run test:cov
 ```
 
-## Support
+## Documentation
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
-# teddy-app
+```bash
+# visit swagger api doc url
+http://localhost:3000/api
+```
