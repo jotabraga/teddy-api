@@ -16,7 +16,6 @@ const prodEnvironment = process.env.NODE_ENV === 'production';
       username: 'postgres',
       password: 'postgres',
       database: 'postgres',
-      entities: [__dirname + '/../**/*.entity.{js,ts}'],
       synchronize: prodEnvironment ? false : true,
     }),
   ],
