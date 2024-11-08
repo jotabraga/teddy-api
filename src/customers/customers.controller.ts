@@ -12,41 +12,49 @@ import {
 import { Response } from 'express';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { CustomersService } from './customers.service';
+import { Customer } from './entities/customer.entity';
 
 @Controller('customers')
 export class CustomersController {
+  constructor(private readonly customersService: CustomersService) {}
+
   @Get()
-  findAll(@Res() response: Response) {
-    return response
-      .status(HttpStatus.OK)
-      .send('this action returns all customers');
+  async findAll(@Res() response: Response): Promise<Response<Customer[]>> {
+    const customers = await this.customersService.getAllCustomers();
+
+    return response.status(HttpStatus.OK).send(customers);
   }
 
   @Post()
-  create(
+  async create(
     @Body() createCustomerDto: CreateCustomerDto,
     @Res() response: Response,
-  ) {
-    return response
-      .status(HttpStatus.CREATED)
-      .send('this action create a customer');
+  ): Promise<Response<Customer>> {
+    const customer =
+      await this.customersService.createCustomer(createCustomerDto);
+    return response.status(HttpStatus.CREATED).send(customer);
   }
 
   @Put(':id')
-  update(
-    @Param('id') id: number,
+  async update(
+    @Param('id') id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
     @Res() response: Response,
-  ) {
-    return response
-      .status(HttpStatus.OK)
-      .send('this action should update customer');
+  ): Promise<Response<Customer>> {
+    const updatedCustomer = await this.customersService.updateCustomer(
+      id,
+      updateCustomerDto,
+    );
+    return response.status(HttpStatus.OK).send(updatedCustomer);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number, @Res() response: Response) {
-    return response
-      .status(HttpStatus.OK)
-      .send('this action should delete a customer');
+  async remove(
+    @Param('id') id: string,
+    @Res() response: Response,
+  ): Promise<Response<Customer>> {
+    const removedCustomer = await this.customersService.removeCustomer(id);
+    return response.status(HttpStatus.OK).send(removedCustomer);
   }
 }
