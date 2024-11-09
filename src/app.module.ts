@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { CustomersModule } from './customers/customers.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import * as Joi from '@hapi/joi';
+import Joi from '@hapi/joi';
 const prodEnvironment = process.env.NODE_ENV === 'production';
 
 @Module({
