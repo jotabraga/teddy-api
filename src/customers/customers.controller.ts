@@ -13,7 +13,6 @@ import { Response } from 'express';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { CustomersService } from './customers.service';
-import { Customer } from './entities/customer.entity';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { CustomerDto } from './dto/customer.dto';
 
