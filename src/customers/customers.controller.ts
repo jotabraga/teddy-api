@@ -15,6 +15,7 @@ import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { CustomersService } from './customers.service';
 import { Customer } from './entities/customer.entity';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { CustomerDto } from './dto/customer.dto';
 
 @ApiTags('customers')
 @Controller('customers')
@@ -25,10 +26,10 @@ export class CustomersController {
   @ApiResponse({
     status: 200,
     description: 'The customers data was sent successfully',
-    type: Customer,
+    type: CustomerDto,
     isArray: true,
   })
-  async findAll(@Res() response: Response): Promise<Response<Customer[]>> {
+  async findAll(@Res() response: Response): Promise<Response<CustomerDto[]>> {
     const customers = await this.customersService.getAllCustomers();
 
     return response.status(HttpStatus.OK).send(customers);
@@ -38,12 +39,12 @@ export class CustomersController {
   @ApiResponse({
     status: 201,
     description: 'The customer was created successfully',
-    type: Customer,
+    type: CustomerDto,
   })
   async create(
     @Body() createCustomerDto: CreateCustomerDto,
     @Res() response: Response,
-  ): Promise<Response<Customer>> {
+  ): Promise<Response<CustomerDto>> {
     const customer =
       await this.customersService.createCustomer(createCustomerDto);
     return response.status(HttpStatus.CREATED).send(customer);
@@ -53,13 +54,13 @@ export class CustomersController {
   @ApiResponse({
     status: 200,
     description: 'The customer was updated successfully',
-    type: Customer,
+    type: CustomerDto,
   })
   async update(
     @Param('id') id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
     @Res() response: Response,
-  ): Promise<Response<Customer>> {
+  ): Promise<Response<CustomerDto>> {
     const updatedCustomer = await this.customersService.updateCustomer(
       id,
       updateCustomerDto,
@@ -71,12 +72,12 @@ export class CustomersController {
   @ApiResponse({
     status: 200,
     description: 'The customer was removed successfully',
-    type: Customer,
+    type: CustomerDto,
   })
   async remove(
     @Param('id') id: string,
     @Res() response: Response,
-  ): Promise<Response<Customer>> {
+  ): Promise<Response<CustomerDto>> {
     const removedCustomer = await this.customersService.removeCustomer(id);
     return response.status(HttpStatus.OK).send(removedCustomer);
   }
