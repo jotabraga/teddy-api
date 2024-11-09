@@ -3,19 +3,31 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CustomersModule } from './customers/customers.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from '@hapi/joi';
 const prodEnvironment = process.env.NODE_ENV === 'production';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: Joi.object({
+        NODE_ENV: Joi.required(),
+        DB_HOST: Joi.required(),
+        DB_DATABASE: Joi.required(),
+        DB_PORT: Joi.required(),
+        DB_USERNAME: Joi.required(),
+        DB_PASSWORD: Joi.required(),
+      }),
+    }),
     CustomersModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: String(process.env.POSTGRES_HOST),
-      port: Number(process.env.POSTGRES_PORT),
-      username: String(process.env.POSTGRES_USERNAME),
-      password: String(process.env.POSTGRES_PASSWORD),
-      database: String(process.env.POSTGRES_DATABASE),
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT, 10),
+      username: process.env.DB_USERNAME,
+      password: String(process.env.DB_PASSWORD),
+      database: process.env.DB_DATABASE,
       entities: [__dirname + '/../**/*.entity.{js,ts}'],
       autoLoadEntities: true,
       synchronize: !prodEnvironment,
