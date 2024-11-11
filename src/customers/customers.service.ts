@@ -4,6 +4,7 @@ import { Customer } from './entities/customer.entity';
 import { Repository } from 'typeorm';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { QueryParamsDto } from './dto/query-params.dto';
 
 @Injectable()
 export class CustomersService {
@@ -12,8 +13,14 @@ export class CustomersService {
     private readonly customerRepository: Repository<Customer>,
   ) {}
 
-  async getAllCustomers(): Promise<Customer[]> {
-    return this.customerRepository.find();
+  async getCustomers(
+    queryParams: QueryParamsDto,
+  ): Promise<[Customer[], number]> {
+    const { limit = 10, offset = 1 } = queryParams;
+    return this.customerRepository.findAndCount({
+      skip: limit * (offset - 1),
+      take: limit,
+    });
   }
 
   async findCustomerById(id: string): Promise<Customer> {

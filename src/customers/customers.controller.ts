@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Res,
 } from '@nestjs/common';
 import { Response } from 'express';
@@ -15,6 +16,7 @@ import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { CustomersService } from './customers.service';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { CustomerDto } from './dto/customer.dto';
+import { QueryParamsDto } from './dto/query-params.dto';
 
 @ApiTags('customers')
 @Controller('customers')
@@ -28,8 +30,11 @@ export class CustomersController {
     type: CustomerDto,
     isArray: true,
   })
-  async findAll(@Res() response: Response): Promise<Response<CustomerDto[]>> {
-    const customers = await this.customersService.getAllCustomers();
+  async findCustomers(
+    @Query() queryParams: QueryParamsDto,
+    @Res() response: Response,
+  ): Promise<Response<CustomerDto[]>> {
+    const customers = await this.customersService.getCustomers(queryParams);
 
     return response.status(HttpStatus.OK).send(customers);
   }
