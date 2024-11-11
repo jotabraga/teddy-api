@@ -64,26 +64,16 @@ $ npm install
 $ echo "NODE_ENV=development" > .env
 ```
 
-### development
-
-```bash
-$ npm run start
-```
-
 ### watch mode
 
 ```bash
 $ npm run start:dev
 ```
 
-### production mode
+### docker
 
 ```bash
-$ echo "NODE_ENV=production" > .env
-```
-
-```bash
-$ npm run start:prod
+$ docker compose up --build
 ```
 
 ## Test
@@ -92,12 +82,6 @@ $ npm run start:prod
 
 ```bash
 $ npm run test
-```
-
-### e2e tests
-
-```bash
-$ npm run test:e2e
 ```
 
 ### test coverage
@@ -112,3 +96,5 @@ $ npm run test:cov
 # visit swagger api doc url
 http://localhost:3000/api
 ```
+
+![aswagger](./src/assets/swagger.png)
