@@ -9,7 +9,7 @@ import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
-  find: jest.fn(),
+  findAndCount: jest.fn(),
   findOne: jest.fn(),
   create: jest.fn(),
   save: jest.fn(),
@@ -43,7 +43,7 @@ describe('CustomersService', () => {
   });
 
   describe('getAllCustomers', () => {
-    it('should return all customers', async () => {
+    it('should return all customers and its count', async () => {
       const mockedCustomers = [
         {
           id: 1,
@@ -64,18 +64,20 @@ describe('CustomersService', () => {
           company: 'teddy',
         },
       ];
-      repository.find.mockResolvedValue(mockedCustomers);
-      const result = await service.getAllCustomers();
-      expect(result).toEqual(mockedCustomers);
-      expect(repository.find).toHaveBeenCalledTimes(1);
+      repository.findAndCount.mockResolvedValue([mockedCustomers, 3]);
+      const queryParams = {};
+      const result = await service.getCustomers(queryParams);
+      expect(result).toEqual([mockedCustomers, 3]);
+      expect(repository.findAndCount).toHaveBeenCalledTimes(1);
     });
 
     it('should return an empty array if there is not any customer', async () => {
       const mockedNoCustomersData: any[] = [];
-      repository.find.mockResolvedValue(mockedNoCustomersData);
-      const result = await service.getAllCustomers();
-      expect(result).toEqual(mockedNoCustomersData);
-      expect(repository.find).toHaveBeenCalledTimes(1);
+      repository.findAndCount.mockResolvedValue([mockedNoCustomersData, 0]);
+      const queryParams = {};
+      const result = await service.getCustomers(queryParams);
+      expect(result).toEqual([mockedNoCustomersData, 0]);
+      expect(repository.findAndCount).toHaveBeenCalledTimes(1);
     });
   });
 

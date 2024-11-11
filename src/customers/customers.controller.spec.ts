@@ -17,7 +17,7 @@ describe('CustomersController', () => {
         {
           provide: CustomersService,
           useValue: {
-            getAllCustomers: jest.fn(),
+            getCustomers: jest.fn(),
             createCustomer: jest.fn(),
             updateCustomer: jest.fn(),
             removeCustomer: jest.fn(),
@@ -37,19 +37,22 @@ describe('CustomersController', () => {
         { id: 2, name: 'Jane', salary: '6000', company: 'teddy' },
       ];
 
-      (customersService.getAllCustomers as jest.Mock).mockResolvedValue(
+      (customersService.getCustomers as jest.Mock).mockResolvedValue([
         mockCustomers,
-      );
+        2,
+      ]);
 
       const mockResponse = {
         status: jest.fn().mockReturnThis(),
         send: jest.fn(),
       } as unknown as Response;
 
-      await controller.findAll(mockResponse);
+      const queryParams = {};
+
+      await controller.findCustomers(queryParams, mockResponse);
 
       expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.send).toHaveBeenCalledWith(mockCustomers);
+      expect(mockResponse.send).toHaveBeenCalledWith([mockCustomers, 2]);
     });
   });
 
