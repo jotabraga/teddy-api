@@ -21,8 +21,6 @@ API for handle Teddy customers (register/get/update/delete)
 ### Future improvements 🔮
 
 - [ ] E2e tests
-- [ ] Typeorm / db implementation
-- [ ] Queue system
 
 ## Tech tools :wrench:
 
